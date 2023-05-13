@@ -11,12 +11,21 @@ public class Clock : MonoBehaviour
     //For tests' sake
     public GameObject secondsAnchor;
 
-    // Update is called once per frame
+    //For optimization's sake
+    int lastMinute = 0;
+
+    //TODO if time allows: make it so minutes and hours progress slowly? instead of going from one minute to another directly.
     void Update()
     {
+        int currentMinute = DateTime.Now.Minute;
+
+        if (lastMinute != currentMinute) {
+            lastMinute = currentMinute;
+            UpdateNeedle(minutesAnchor, currentMinute, -6);
+            UpdateNeedle(hoursAnchor, DateTime.Now.Hour, 15);
+        }
+
         //UpdateNeedle(secondsAnchor, DateTime.Now.Second, -6);
-        UpdateNeedle(minutesAnchor, DateTime.Now.Minute, -6);
-        UpdateNeedle(hoursAnchor, DateTime.Now.Hour, 15);
     }
 
     void UpdateNeedle(GameObject needleAnchor, int amountOfTime, int multiplicator) {
